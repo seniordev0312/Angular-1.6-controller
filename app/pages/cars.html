@@ -1,0 +1,95 @@
+<div ng-include="'partials/header.html'"></div>
+<div id="wrapper">
+
+    <div ng-include="'partials/sidebar.html'"></div>
+
+    <!-- Page content -->
+    <div id="page-content-wrapper">
+        <!-- <div class="content-header">
+            <h1 id="home">
+                <a id="menu-toggle" href="#" class="glyphicon glyphicon-align-justify btn-menu toggle">
+                    <i class="fa fa-bars"></i>
+                </a>
+                Sidebar Navigation Template
+            </h1>
+        </div> -->
+
+        <div class="page-content inset" data-spy="scroll" data-target="#spy">
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">Add Car</button>
+            <br />
+            <br />
+            <div>
+            	<table class="table">
+					<thead class="thead-dark">
+					    <tr>
+					      <th scope="col">#</th>
+					      <th scope="col">Name</th>
+					      <th scope="col">Model</th>
+					      <th scope="col">Price</th>
+					      <th scope="col">More</th>
+					      <th scope="col">Action</th>
+					    </tr>
+					</thead>
+					<tbody>
+					    <tr ng-repeat="car in cars track by $index">
+					    	<td>{{$index+1}}</td>
+					    	<td>{{car.manufacturer}}</td>
+					    	<td>{{car.model}}</td>
+					    	<td>{{car.price}}</td>
+					    	<td><a target="_blank" href="{{car.wiki}}">Read more</a></td>
+					    	<td>
+					    		<button class="btn btn-dark" data-ng-click="edit(car)">
+					    			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					    		</button>
+					    		<button class="btn btn-danger" data-ng-click="delete(car)">
+					    			<i class="fa fa-trash" aria-hidden="true"></i>
+					    		</button>
+					    	</td>
+					    </tr>
+					</tbody>
+				</table>
+	        </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" data-backdrop="static" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  	<div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      	<div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">New Car</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+	      	</div>
+	      	<div class="modal-body">
+		        <form name="myForm">
+		          <div class="form-group">
+		            <label for="name" class="col-form-label">Name:</label>
+		            <input type="text" data-ng-model="car.manufacturer" required="true" class="form-control" id="name">
+		          </div>
+		          <div class="form-group">
+		            <label for="model" class="col-form-label">Model:</label>
+		            <input type="text" class="form-control" required="true" data-ng-model="car.model" id="model">
+		          </div>
+		          <div class="form-group">
+		            <label for="price" class="col-form-label">Price:</label>
+		            <input type="number" class="form-control" required="true" data-ng-model="car.price" id="price">
+		          </div>
+		          <div class="form-group">
+		            <label for="link" class="col-form-label">Link:</label>
+		            <input type="text" class="form-control" required="true" data-ng-model="car.wiki" id="link">
+		          </div>
+		          <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-ng-click="cancel()" data-dismiss="modal">Close</button>
+			        <button type="submit" ng-if="!isEdit" ng-disabled="myForm.$invalid" class="btn btn-dark" data-ng-click="save()">Save</button>
+			        <button type="submit" ng-if="isEdit" ng-disabled="myForm.$invalid" class="btn btn-dark" data-ng-click="update()">Update</button>
+			      </div>
+		        </form>
+	      	</div>
+	    </div>
+  	</div>
+</div>
