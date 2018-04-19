@@ -4,11 +4,14 @@ var app = angular.module('myApp', [
   'ngRoute',
   'starter.controller',
   'myApp.version',
-  'starter.services'
+  'starter.services',
+  'restangular'
 ])
 
-app.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  //$locationProvider.hashPrefix('!');
+app.config(['$locationProvider', '$routeProvider', 'RestangularProvider', function($locationProvider, $routeProvider, RestangularProvider) {
+    // $locationProvider.hashPrefix('!');
+
+    RestangularProvider.setBaseUrl('https://api.myjson.com/bins/'); 
 
   	$routeProvider
     .when("/cars", {

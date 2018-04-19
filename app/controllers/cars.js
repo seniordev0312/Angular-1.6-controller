@@ -1,28 +1,26 @@
 angular.module('starter.controller', [])
 
-.controller('carsCtrl', ['$scope','FakeService',function($scope,FakeService) {
+.controller('carsCtrl', ['$scope', 'FakeService', 'Restangular',function($scope, FakeService, Restangular) {
 	$scope.car = {};
 	$scope.cars = [];	
 	$scope.isEdit = false;
 
 	if (!localStorage.getItem('cars')) {
-		localStorage.setItem('cars',JSON.stringify([]));
+		FakeService.getCarsUsinRestAngular().then(function(response){			
+		    localStorage.setItem('cars',JSON.stringify(response));
+	    	$scope.getCars();
+		}, function(error){
+		    console.log('error',error)	
+		})
 	}
-	
+
+
 
 	$scope.getCars = function(){
-		$scope.cars = FakeService.getCars();
-		// FakeService.getCars().then(function(res,err){
-		// 	if (!err) {
-		// 		if(!localStorage.getItem('cars')){
-		// 			localStorage.setItem('cars',JSON.stringify([]));
-		// 		}
-		// 		$scope.cars = res.data.data;
-		// 		$scope.cars = $scope.cars.concat(JSON.parse(localStorage.getItem('cars')));				
-		// 	}else{
-		// 		console.log("err: ",JSON.stringify(err));
-		// 	}						
-		// })
+		// $scope.cars = FakeService.getCars();
+		FakeService.getCars().then(function(res,err){			
+			$scope.cars = res;
+		});
 	}
 
 	$scope.getCars();
@@ -40,7 +38,7 @@ angular.module('starter.controller', [])
 
 	$scope.edit = function(car){
 		$scope.isEdit = true;
-		$scope.car = car;
+		$scope.car = angular.copy(car);
 		$('#exampleModal').modal('show');
 	}
 
@@ -53,6 +51,12 @@ angular.module('starter.controller', [])
 	$scope.delete = function(car){
 		FakeService.deleteCar(car);
 		$scope.getCars();
+	}
+
+	$scope.open = function(){		
+		$scope.car = {};
+		$scope.isEdit = false;
+		$('#exampleModal').modal('show');
 	}
 
 }]);
